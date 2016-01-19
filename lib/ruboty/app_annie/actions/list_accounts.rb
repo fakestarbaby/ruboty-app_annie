@@ -9,7 +9,7 @@ module Ruboty
         private
 
         def list_accounts
-          message.reply(accounts, code: true)
+          message.reply(accounts.join("\n"), code: true)
         end
 
         def accounts
