@@ -15,12 +15,22 @@ module Ruboty
         description: "Retrieve the product list of an Analytics Account Connection",
       )
 
+      on(
+        /annie list (?<market>ios|android) reviews of (?<product_id>.+) from (?<start_date>.+) to (?<end_date>.+) in (?<country>.+)\z/,
+        name: "list_reviews",
+        description: "Retrieve one product’s reviews",
+      )
+
       def list_accounts(message)
         Ruboty::AppAnnie::Actions::ListAccounts.new(message).call
       end
 
       def list_products(message)
         Ruboty::AppAnnie::Actions::ListProducts.new(message).call
+      end
+
+      def list_reviews(message)
+        Ruboty::AppAnnie::Actions::ListReviews.new(message).call
       end
     end
   end
