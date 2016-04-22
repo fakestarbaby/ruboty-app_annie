@@ -1,3 +1,6 @@
+require "active_support/core_ext/date"
+require "active_support/core_ext/time"
+require "active_support/core_ext/numeric/time"
 require "anego"
 
 require "ruboty"

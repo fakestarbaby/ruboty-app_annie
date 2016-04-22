@@ -21,6 +21,12 @@ module Ruboty
         description: "Retrieve one product’s reviews",
       )
 
+      on(
+        /annie list (?<market>ios|android) reviews of (?<product_id>.+) days ago (?<days_ago>.+) in (?<country>.+)\z/,
+        name: "list_reviews_of_days_ago",
+        description: "Retrieve one product’s reviews of days ago",
+      )
+
       def list_accounts(message)
         Ruboty::AppAnnie::Actions::ListAccounts.new(message).call
       end
@@ -30,6 +36,10 @@ module Ruboty
       end
 
       def list_reviews(message)
+        Ruboty::AppAnnie::Actions::ListReviews.new(message).call
+      end
+
+      def list_reviews_of_days_ago(message)
         Ruboty::AppAnnie::Actions::ListReviews.new(message).call
       end
     end
