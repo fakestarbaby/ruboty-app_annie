@@ -3,17 +3,27 @@ module Ruboty
     module Actions
       class ListReviews < Base
         def call
-          list_reviews if exists_reviews?
+          initialize_date_conditions
+          return if !exists_reviews?
+
+          list_reviews
         end
 
         private
+
+        def exists_reviews?
+          !reviews.empty?
+        end
 
         def list_reviews
           message.reply(reviews.join("\n\n"))
         end
 
-        def exists_reviews?
-          !reviews.empty?
+        def initialize_date_conditions
+          days_ago = Date.today.ago(given_days_ago.to_i.days).to_date.to_s
+          @start_date = days_ago
+          @end_date = days_ago
+        rescue IndexError
         end
 
         def reviews
@@ -77,11 +87,15 @@ module Ruboty
         end
 
         def given_start_date
-          message[:start_date]
+          @start_date ||= message[:start_date]
         end
 
         def given_end_date
-          message[:end_date]
+          @end_date ||= message[:end_date]
+        end
+
+        def given_days_ago
+          message[:days_ago]
         end
 
         def given_country
