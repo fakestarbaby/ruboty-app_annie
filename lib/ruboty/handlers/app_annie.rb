@@ -22,7 +22,7 @@ module Ruboty
       )
 
       on(
-        /annie list (?<market>ios|android) reviews of (?<product_id>.+) days ago (?<days_ago>.+) in (?<country>.+)\z/,
+        /annie list (?<market>(?:ios|android)) reviews of (?<product_id>.+) days ago (?<days_ago>.+) in (?<country>.+)\z/,
         name: "list_reviews_of_days_ago",
         description: "Retrieve one product’s reviews of days ago",
       )
