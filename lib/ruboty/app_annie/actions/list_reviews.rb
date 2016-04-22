@@ -4,9 +4,13 @@ module Ruboty
       class ListReviews < Base
         def call
           initialize_date_conditions
-          return if !exists_reviews?
 
-          list_reviews
+          case
+          when !exists_reviews?
+            message.reply("Could not find the reviews")
+          else
+            list_reviews
+          end
         end
 
         private
