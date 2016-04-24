@@ -7,7 +7,7 @@ module Ruboty
 
           case
           when !exists_reviews?
-            message.reply("Could not find the reviews")
+            return true
           else
             list_reviews
           end
