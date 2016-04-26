@@ -31,13 +31,30 @@ module Ruboty
         end
 
         def reviews
-          @reviews ||= client.product_reviews(market, given_product_id, given_start_date, given_end_date, given_country).body.reviews.map do |review|
-            "#{market_string(market)} #{product.product_name} #{version_string(review)}\n" + "> #{rating_string(review)}#{title_string(review)}\n" + "> ```#{review.text}```"
+          reply_reviews = []
+          if given_product_id.nil?
+            client.products(account.account_id).body.products.select{ |p| p.status }.map do |p|
+              reply_reviews << product_reviews(p.product_id, p.product_name)
+            end
+          else
+            product = product(given_product_id)
+            reply_reviews = product_reviews(product.product_id, product.product_name)
+          end
+          reply_reviews
+        end
+
+        def product_reviews(product_id, product_name)
+          client.product_reviews(market, product_id, given_start_date, given_end_date, given_country).body.reviews.map do |review|
+            "#{market_string(market)} #{product_name} #{version_string(review)}\n" + "> #{rating_string(review)}#{title_string(review)}\n" + "> ```#{review.text}```"
           end
         end
 
-        def product
-          @product ||= client.product_details(market, given_product_id).body.product
+        def account
+          client.accounts.body.accounts.select { |a| a.market == market }.first
+        end
+
+        def product(product_id)
+          client.product_details(market, product_id).body.product
         end
 
         def market_string(market)
@@ -88,6 +105,8 @@ module Ruboty
 
         def given_product_id
           message[:product_id]
+        rescue IndexError
+          nil
         end
 
         def given_start_date
