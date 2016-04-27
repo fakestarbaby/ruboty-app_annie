@@ -18,6 +18,8 @@ gem "ruboty-app_annie"
 @ruboty annie list products of <account_id> - Retrieve the product list of an Analytics Account Connection
 @ruboty annie list {ios|android} reviews of <product_id> from <start_date> to <end_date> in <country> - Retrieve one product’s reviews
 @ruboty annie list {ios|android} reviews of <product_id> days ago <days_ago> in <country> - Retrieve one product’s reviews of days ago
+@ruboty annie list {ios|android} all reviews days ago <days_ago> in <country> - Retrieve all product's reviews of days ago
+@ruboty annie list {ios|android} all ranks of <feed> days ago <days_ago> in <country> and <category> - Retrieve all product's ranks of days ago
 ```
 
 ## ENV
